@@ -11,16 +11,11 @@
         .catch((err) => {
           console.log('err',err);
         });
-      // keep track of APP STATE
-      // ==============================
-      //
-      // this.isCreating = false;
-      // this.isEditing = false;
+
       this.editedTodo = null;
 
 
-       function setTodoToEdit(todo) {
-         console.log('todo to edit', todo)
+      function setTodoToEdit(todo) {
         this.editedTodo = todo;
       }
 
@@ -34,9 +29,7 @@
       function addTodo(newTodo) {
         $http.post('/todos', newTodo)
           .then(function(response) {
-            // self.todos = response.data.todos;
             newTodo.description = '';
-            this.isCreating = false
             $state.go('allTodos', {url: '/todos'})
           })
           .catch((err) => {
@@ -53,13 +46,11 @@
       }
 
       function editTodo(todo) {
-        // debugger
         $http.put(`/todos/${$state.params.todo._id}`, todo)
           .then(function(response){
             console.log(response);
-            // self.todos = response.data.todos;
+            
             $state.go('allTodos', {url: '/todos'})
-
           })
 
         this.isEditing = false;
@@ -76,7 +67,7 @@
 
     app.controller('AuthCtrl', function($http, $state, $stateParams)  {
       var self = this;
-      
+
       function login(userPass) {
         $http.post('/users/login', {username: userPass.username, password: userPass.password})
           .then(function(response) {
@@ -104,7 +95,6 @@
       function logout(userPass) {
         $http.delete('/users/logout')
         .then(function(response) {
-          // console.log(response)
           $state.go('index', {url: '/'})
         })
         .catch((err) => {
