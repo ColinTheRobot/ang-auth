@@ -18,7 +18,7 @@ router.post('/signup', function(req, res) {
     req.body.password, function(err, user) {
       if (err) return res.json({ user : user });
 
-      res.json({status: 201, message: 'success'});
+      res.json(201,'success');
     });
 });
 
@@ -48,7 +48,7 @@ router.delete('/logout', function(req, res) {
 
 var authorize = function(req, res, next) {
   if (!req.user || req.user._id != req.params.id) {
-    res.json({status: 401, message: 'unauthorized'})
+    res.json(401, 'unauthorized')
   } else {
     next()
   }
