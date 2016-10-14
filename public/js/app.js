@@ -11,7 +11,6 @@
         .catch((err) => {
           console.log(err);
         });
-
       // keep track of APP STATE
       // ==============================
 
@@ -30,6 +29,7 @@
       }
 
        function setTodoToEdit(todo) {
+         console.log(todo)
         this.editedTodo = todo;
       }
 
@@ -41,12 +41,12 @@
       // CRUD LOGIC
       // ==============================
       function addTodo(newTodo) {
-
         $http.post('/todos', newTodo)
           .then(function(response) {
-            self.todos = response.data.todos;
-
+            // self.todos = response.data.todos;
             newTodo.description = '';
+            this.isCreating = false
+            $state.go('allTodos', {url: '/todos'})
           })
           .catch((err) => {
             console.log(err);
@@ -62,10 +62,13 @@
       }
 
       function editTodo(todo) {
-        $http.put(`/todos/${todo._id}`, todo)
+        // debugger
+        $http.put(`/todos/${$state.params.todo._id}`, todo)
           .then(function(response){
             console.log(response);
-            self.todos = response.data.todos;
+            // self.todos = response.data.todos;
+            $state.go('allTodos', {url: '/todos'})
+
           })
 
         this.isEditing = false;
@@ -84,15 +87,12 @@
 
     app.controller('AuthCtrl', function($http, $state, $stateParams)  {
       var self = this;
-      this.user =  $stateParams.user
-      // debugger
-      // console.log($stateParams)
       function login(userPass) {
         $http.post('/users/login', {username: userPass.username, password: userPass.password})
           .then(function(response) {
-            self.todos = response.data.todos;
-            // console.log(response.data.user)
-            $stateParams.user = response.data.user
+            // self.todos = response.data.todos;
+            self.user = response.data.user
+            // $stateParams.user = response.data.user
             $state.go('index', {url: '/', user: response.data.user})
           })
           .catch((err) => {
@@ -104,6 +104,7 @@
         $http.post('/users/signup', {username: userPass.username, password: userPass.password})
           .then(function(response) {
             console.log(response)
+
             $state.go('login', {url: '/login'})
           })
           .catch((err) => {
@@ -114,7 +115,7 @@
       function logout(userPass) {
         $http.delete('/users/logout')
         .then(function(response) {
-          console.log(response)
+          // console.log(response)
           $state.go('index', {url: '/'})
         })
         .catch((err) => {

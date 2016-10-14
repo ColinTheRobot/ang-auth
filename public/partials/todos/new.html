@@ -1,0 +1,15 @@
+<!-- <div ng-controller="MainCtrl as main" class="form"> -->
+<div class="form">
+  <form ng-submit="main.addTodo(newTodo)">
+    <div>
+      <label for="description">Description</label>
+      <input type="text" ng-model="newTodo.description">
+    </div>
+    <div>
+      <label for="done">done?</label>
+      <input type="checkbox" ng-model="newTodo.done" value="true" checked>
+    </div>
+    <button type="submit">Add Todo!</button>
+  </form>
+  <!-- <button ng-click="main.reset(newTodo)">reset</button> -->
+</div>

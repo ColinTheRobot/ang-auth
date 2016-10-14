@@ -3,15 +3,15 @@ var router = express.Router();
 
 var Todo = require('../models/todo.js');
 
-var authenticate = function(req, res, next) {
-  if (!req.user || req.user._id != req.params.id) {
+var authorize = function(req, res, next) {
+  if (!req.user) {
     res.json({status: 401, message: 'unauthorized'})
   } else {
     next()
   }
 }
 
-router.get('/', authenticate, function(req, res){
+router.get('/', authorize, function(req, res){
   var query = Todo.find({});
   query.then(function(todos) {
     res.json({todos: todos, user: req.user})
@@ -32,9 +32,9 @@ router.get('/:todoId', function(req, res){
 });
 
 
-router.post('/', function(req, res){
+router.post('/', authorize, function(req, res){
   var newToDo;
-  console.log(req.user)
+  console.log('user',req.user)
 
   Todo.create({
     description: req.body.description,
@@ -77,10 +77,10 @@ router.put('/:todoId', function(req, res) {
 })
 
 
-router.delete('/logout', function(req, res){
+router.delete('/:id', function(req, res){
   var todos;
 
-  var query = Todo.remove({_id: req.user._id})
+  var query = Todo.remove({_id: req.params.id})
     query.then(function() {
       return Todo.find({}).exec();
     })

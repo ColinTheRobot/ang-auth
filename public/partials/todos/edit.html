@@ -1,0 +1,13 @@
+<div class="form">
+  <form ng-submit="main.editTodo(main.editedTodo)"action="#">
+    <div>
+      <label for="description">Description</label>
+      <input type="text" ng-model="main.editedTodo.description">
+    </div>
+    <div>
+      <label for="done">done?</label>
+      <input type="checkbox" ng-model="main.editedTodo.done" value="true" checked>
+    </div>
+    <button type="submit" >Edit Todo!</button>
+  </form>
+</div>

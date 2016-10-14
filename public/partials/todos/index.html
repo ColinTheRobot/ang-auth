@@ -1,0 +1,14 @@
+<div class="todos">
+  <div class="todo" ng-repeat="todo in main.todos">
+    <div>
+      <p>Todo: {{todo.description}}</p>
+      <p>Done?: {{todo.done}}</p>
+      <p>Created at: {{todo.createdAt | date:'short' }}</p>
+      <div class="nav">
+        <!-- main.setTodoToEdit(todo) -->
+        <button ui-sref="editTodo({todo: todo})" ng-click="main.setTodoToEdit(todo)">Edit</button>
+        <button ng-click="main.deleteTodo(todo._id)">&#10006</button>
+      </div>
+    </div>
+  </div>
+</div>
