@@ -16,6 +16,8 @@
       <button ui-sref="login">login </button>
       <button ui-sref="signup">signup</button>
       <button ng-click="auth.logout()">logout</button>
+      <button ui-sref="addTodo">Add Todo!</button>
+      <button ui-sref="allTodos">Todos</button>
     </nav>
     <div ng-show="auth.user">Welcome {{auth.user.username}}!</div>
   </div>
@@ -23,10 +25,10 @@
   <div ui-view>
   </div>
 
-  <div ng-controller="MainCtrl as main">
+  <!-- <div ng-controller="MainCtrl as main">
     <div class="nav" ng-hide="main.isCreating || main.isEditing">
         <button ui-sref="addTodo" ng-click="main.startCreating()">Add Todo!</button>
     </div>
-  </div>
+  </div> -->
 </body>
 </html>
